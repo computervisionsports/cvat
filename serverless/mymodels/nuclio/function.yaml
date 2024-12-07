@@ -1,0 +1,123 @@
+metadata:
+  name: tm-scoreboard
+  namespace: cvat
+  annotations:
+    name: Template Matching Scoreboards
+    type: detector
+    spec: |
+      [
+        { "id": 0, "name": "sb_00001", "type": "rectangle" },
+        { "id": 1, "name": "sb_00002", "type": "rectangle" },
+        { "id": 2, "name": "sb_00003", "type": "rectangle" },
+        { "id": 3, "name": "sb_00004", "type": "rectangle" },
+        { "id": 4, "name": "sb_00005", "type": "rectangle" },
+        { "id": 5, "name": "sb_00006", "type": "rectangle" },
+        { "id": 6, "name": "sb_00007", "type": "rectangle" },
+        { "id": 7, "name": "sb_00008", "type": "rectangle" },
+        { "id": 8, "name": "sb_00009", "type": "rectangle" },
+        { "id": 9, "name": "sb_00010", "type": "rectangle" },
+        { "id": 10, "name": "sb_00011", "type": "rectangle" },
+        { "id": 11, "name": "sb_00012", "type": "rectangle" },
+        { "id": 12, "name": "sb_00013", "type": "rectangle" },
+        { "id": 13, "name": "sb_00014", "type": "rectangle" },
+        { "id": 14, "name": "sb_00015", "type": "rectangle" },
+        { "id": 15, "name": "sb_00016", "type": "rectangle" },
+        { "id": 16, "name": "sb_00017", "type": "rectangle" },
+        { "id": 17, "name": "sb_00018", "type": "rectangle" },
+        { "id": 18, "name": "sb_00019", "type": "rectangle" },
+        { "id": 19, "name": "sb_00020", "type": "rectangle" },
+        { "id": 20, "name": "sb_00021", "type": "rectangle" },
+        { "id": 21, "name": "sb_00022", "type": "rectangle" },
+        { "id": 22, "name": "sb_00023", "type": "rectangle" },
+        { "id": 23, "name": "sb_00024", "type": "rectangle" },
+        { "id": 24, "name": "sb_00025", "type": "rectangle" },
+        { "id": 25, "name": "sb_00026", "type": "rectangle" },
+        { "id": 26, "name": "sb_00027", "type": "rectangle" },
+        { "id": 27, "name": "sb_00028", "type": "rectangle" },
+        { "id": 28, "name": "sb_00029", "type": "rectangle" },
+        { "id": 29, "name": "sb_00030", "type": "rectangle" },
+        { "id": 30, "name": "sb_00031", "type": "rectangle" },
+        { "id": 31, "name": "sb_00032", "type": "rectangle" },
+        { "id": 32, "name": "sb_00033", "type": "rectangle" },
+        { "id": 33, "name": "sb_00034", "type": "rectangle" },
+        { "id": 34, "name": "sb_00035", "type": "rectangle" },
+        { "id": 35, "name": "sb_00036", "type": "rectangle" },
+        { "id": 36, "name": "sb_00037", "type": "rectangle" },
+        { "id": 37, "name": "sb_00038", "type": "rectangle" },
+        { "id": 38, "name": "sb_00039", "type": "rectangle" },
+        { "id": 39, "name": "sb_00040", "type": "rectangle" },
+        { "id": 40, "name": "sb_00041", "type": "rectangle" },
+        { "id": 41, "name": "sb_00042", "type": "rectangle" },
+        { "id": 42, "name": "sb_00043", "type": "rectangle" },
+        { "id": 43, "name": "sb_00044", "type": "rectangle" },
+        { "id": 44, "name": "sb_00045", "type": "rectangle" },
+        { "id": 45, "name": "sb_00046", "type": "rectangle" },
+        { "id": 46, "name": "sb_00047", "type": "rectangle" },
+        { "id": 47, "name": "sb_00048", "type": "rectangle" },
+        { "id": 48, "name": "sb_00049", "type": "rectangle" },
+        { "id": 49, "name": "sb_00050", "type": "rectangle" },
+        { "id": 50, "name": "sb_00051", "type": "rectangle" },
+        { "id": 51, "name": "sb_00052", "type": "rectangle" },
+        { "id": 52, "name": "sb_00053", "type": "rectangle" },
+        { "id": 53, "name": "sb_00054", "type": "rectangle" },
+        { "id": 54, "name": "sb_00055", "type": "rectangle" },
+        { "id": 55, "name": "sb_00056", "type": "rectangle" },
+        { "id": 56, "name": "sb_00057", "type": "rectangle" },
+        { "id": 57, "name": "sb_00058", "type": "rectangle" },
+        { "id": 58, "name": "sb_00059", "type": "rectangle" },
+        { "id": 59, "name": "sb_00060", "type": "rectangle" },
+        { "id": 60, "name": "sb_00061", "type": "rectangle" },
+        { "id": 61, "name": "sb_00062", "type": "rectangle" },
+        { "id": 62, "name": "sb_00063", "type": "rectangle" },
+        { "id": 63, "name": "sb_00064", "type": "rectangle" },
+        { "id": 64, "name": "sb_00065", "type": "rectangle" },
+        { "id": 65, "name": "sb_00066", "type": "rectangle" },
+        { "id": 66, "name": "sb_00067", "type": "rectangle" },
+        { "id": 67, "name": "sb_00068", "type": "rectangle" },
+        { "id": 68, "name": "sb_00069", "type": "rectangle" },
+        { "id": 69, "name": "sb_00070", "type": "rectangle" },
+        { "id": 70, "name": "sb_00071", "type": "rectangle" },
+        { "id": 71, "name": "sb_00072", "type": "rectangle" },
+        { "id": 72, "name": "sb_00073", "type": "rectangle" },
+        { "id": 73, "name": "sb_00074", "type": "rectangle" },
+        { "id": 74, "name": "sb_00075", "type": "rectangle" },
+        { "id": 75, "name": "sb_00076", "type": "rectangle" },
+        { "id": 76, "name": "sb_00077", "type": "rectangle" },
+        { "id": 77, "name": "sb_00078", "type": "rectangle" },
+        { "id": 78, "name": "sb_00079", "type": "rectangle" },
+        { "id": 79, "name": "sb_00080", "type": "rectangle" },
+        { "id": 80, "name": "sb_00081", "type": "rectangle" },
+        { "id": 81, "name": "sb_00082", "type": "rectangle" },
+        { "id": 82, "name": "sb_00083", "type": "rectangle" }
+
+      ]
+spec:
+  description: Template Matching Scoreboards
+  runtime: 'python:3.9'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.base-python_image
+    baseImage: rafaelpadilla1984/base-python-image:v1.0
+
+    directives:
+      preCopy:
+        - kind: ENV
+          value: TM_TARGET_CLASS="all"
+        - kind: RUN
+          value: pip install requests
+
+  triggers:
+    myHttpTrigger:
+      NumWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume

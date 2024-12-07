@@ -25,7 +25,10 @@ do
 
     echo "Deploying $func_rel_path function..."
     nuctl deploy --project-name cvat --path "$func_root" \
-        --file "$func_config" --platform local
+        --file "$func_config" --platform local \
+        --env SAMBA_API_KEY=$SAMBA_API_KEY \
+        --env SAMBA_INFERENCE_URI=$SAMBA_INFERENCE_URI
+
 done
 
 nuctl get function --platform local
