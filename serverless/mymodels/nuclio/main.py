@@ -1,144 +1,155 @@
 import json
-import base64
-from PIL import Image
-import io
-import yaml
 import os
-import json
+
 import requests
-from urllib.parse import urljoin
+import yaml
 
-FUNC_NAME = "tm_scoreboards"
-
-def log(texto):
-    with open(f'logging_{FUNC_NAME}.txt', 'a') as f:
-        f.write(texto+"\n")
-
-def persist_var_env(name, value):
-    with open(name, 'w') as f:
-        f.write(value)
-
-def read_var_env_from_file(name):
-    with open(name, 'r') as f:
-        return f.readline().strip()
-    return None
+# The model reports one label per broadcaster ("scoreboard_sb_ESPN"). CVAT only
+# auto-maps labels whose names match exactly, so they are collapsed into a
+# single "scoreboard" label that carries the broadcaster as an attribute.
+SCOREBOARD_LABEL_PREFIX = "scoreboard_sb_"
+SCOREBOARD_LABEL = "scoreboard"
+BROADCASTER_ATTRIBUTE = "broadcaster"
 
 
 def init_context(context):
-    context.logger.info("Init context...  0%")
+    """Initialize the reusable HTTP client and validate runtime configuration."""
+    context.logger.info("Initializing CVAT inference API proxy")
 
-    log("entrou na init_context")
-
-    # Read labels
-    with open("/opt/nuclio/function.yaml", 'rb') as function_file:
+    with open("/opt/nuclio/function.yaml", "rb") as function_file:
         fn_config = yaml.safe_load(function_file)
 
-    # Get labels from function.yaml'
-    labels_spec = fn_config['metadata']['annotations']['spec']
-    context.user_data.labels = {item['id']: item['name'] for item in json.loads(labels_spec)}
-    log(f"context.user_data.labels: {context.user_data.labels}")
+    labels_spec = fn_config["metadata"]["annotations"]["spec"]
+    labels = json.loads(labels_spec)
+    context.user_data.labels = {item["name"] for item in labels}
+    context.user_data.broadcasters = {
+        value
+        for item in labels
+        if item["name"] == SCOREBOARD_LABEL
+        for attribute in item.get("attributes", [])
+        if attribute["name"] == BROADCASTER_ATTRIBUTE
+        for value in attribute["values"]
+    }
 
-    # Read TM_TARGET_CLASS from env var
-    target_class = os.environ.get("TM_TARGET_CLASS", None)
-    # Save TM_TARGET_CLASS into file
-    persist_var_env("TM_TARGET_CLASS", target_class)
-    # Set TM_TARGET_CLASS to context.user_data.target_class
-    context.user_data.target_class = target_class
-    log(f"target_class from var env: {context.user_data.target_class}")
+    # The URL must include the endpoint, for example:
+    # http://host.docker.internal:8000/v1/inference
+    api_url = os.environ.get("CVAT_INFERENCE_API_URL")
+    api_key = os.environ.get("CVAT_INFERENCE_API_KEY")
+    model_name = os.environ.get(
+        "CVAT_INFERENCE_MODEL_NAME",
+        "rfdetr_inference_model",
+    )
 
-    # Read INFERENCE_API_URI from env var
-    context.user_data.inference_api_uri = os.environ.get("SAMBA_INFERENCE_URI", None)
-    context.user_data.inference_api_uri = urljoin(context.user_data.inference_api_uri, FUNC_NAME)
-    log(f"inference_api_uri from var env: {context.user_data.inference_api_uri}")
+    missing = [
+        name
+        for name, value in (
+            ("CVAT_INFERENCE_API_URL", api_url),
+            ("CVAT_INFERENCE_API_KEY", api_key),
+        )
+        if not value
+    ]
+    if missing:
+        raise RuntimeError(
+            "Missing required environment variables: {}".format(", ".join(missing))
+        )
 
-    # Read INFERENCE_API_KEY from env var
-    context.user_data.inference_api_key = os.environ.get("SAMBA_API_KEY", None)
-    log(f"inference_api_key from var env: {context.user_data.inference_api_key}")
+    context.user_data.api_url = api_url
+    context.user_data.api_key = api_key
+    context.user_data.model_name = model_name
+    context.user_data.session = requests.Session()
 
-    context.logger.info("Init context...100%")
+    context.logger.info(f"Inference proxy ready: model={model_name} endpoint={api_url}")
 
-
-# def handler(context, event):
-#     log("Entered in handler")
-#     # Read target class from file
-#     context.user_data.target_class = read_var_env_from_file("TM_TARGET_CLASS")
-#     log(f"target_class from file: {context.user_data.target_class}")
-#     log(f"inference_api_uri: {context.user_data.inference_api_uri}")
-#     log(f"inference_api_key: {context.user_data.inference_api_key}")
-#     # PRONTO! AQUI CHAMO A API
-#     results = []
-#     for i in range(10):
-#         results.append({
-#                 "confidence": str(float(0.1*i)),
-#                 "label": context.user_data.target_class,
-#                 "points": (i, i, i+i, i+i),
-#                 "type": "rectangle",
-#             })
-#     log("Leaving handler")
-#     return context.Response(body=json.dumps(results), headers={},
-#         content_type='application/json', status_code=200)
 
 def handler(context, event):
-    log("Entered in handler")
-
-    # Read target class from file
-    context.user_data.target_class = read_var_env_from_file("TM_TARGET_CLASS")
-    log(f"target_class from file: {context.user_data.target_class}")
-    log(f"inference_api_uri: {context.user_data.inference_api_uri}")
-    log(f"inference_api_key: {context.user_data.inference_api_key}")
-
-    # Decode the image from the event
+    """Forward a CVAT detector request to the FastAPI inference service."""
     data = event.body
-    base64_image = data.get("image", None)
-    log(f"base64_image: {base64_image}")
-    log(f"type(base64_image): {type(base64_image)}")
+    base64_image = data.get("image")
 
     if not base64_image:
-        return context.Response(body=json.dumps([]), headers={},
-        content_type='application/json', status_code=400)
+        return _response(context, [], status_code=400)
 
-    # buf = io.BytesIO(base64.b64decode(image))
-
-    # Prepare the payload for the POST request
     payload = {
-             "api_key": context.user_data.inference_api_key,
-             "target_class": context.user_data.target_class,
-             "encoded_image": base64_image
-         }
-    log(f"payload: {base64_image}")
-    # Send the request
-    response = requests.post(context.user_data.inference_api_uri, json=payload)
-    if response.status_code != 200:
-        return context.Response(body=json.dumps([]), headers={},
-            content_type='application/json', status_code=400)
+        "api_key": context.user_data.api_key,
+        "model_name": context.user_data.model_name,
+        "encoded_image": base64_image,
+        "threshold": float(data.get("threshold", 0.5)),
+    }
 
-    result = response.json()
-    log(f"response.status_code: {response.status_code}")
-    log(f"response: {result}")
-    log(f"results: {result.get('results',[])}")
-    return context.Response(body=json.dumps(result.get('results',[])), headers={},
-        content_type='application/json', status_code=200)
+    try:
+        response = context.user_data.session.post(
+            context.user_data.api_url,
+            json=payload,
+            timeout=25,
+        )
+        response.raise_for_status()
+        body = response.json()
+    except requests.RequestException as exc:
+        context.logger.error(f"Inference API request failed: {exc!s}")
+        return _response(context, [], status_code=502)
+    except ValueError as exc:
+        context.logger.error(f"Inference API returned invalid JSON: {exc!s}")
+        return _response(context, [], status_code=502)
 
-    # results = []
-    # for i in range(10):
-    #     results.append({
-    #         "confidence": str(float(0.1*i)),
-    #         "label": context.user_data.target_class,
-    #         "points": (i, i, i+i, i+i),
-    #         "type": "rectangle",
-    #     })
-    # return context.Response(body=json.dumps(results), headers={},
-    #     content_type='application/json', status_code=200)
+    results = body.get("results")
+    if not isinstance(results, list):
+        context.logger.error("Inference API response does not contain a results list")
+        return _response(context, [], status_code=502)
 
-    # response.raise_for_status()  # Raise an error for bad responses
+    results = [
+        _collapse_scoreboard(item, context.user_data.broadcasters)
+        for item in results
+        if isinstance(item, dict)
+    ]
 
-    # # Parse the JSON response
-    # results = response.json()
-    # log("Received results from API")
+    # CVAT can only map labels advertised by function.yaml. Dropping an unknown
+    # label here also prevents backend configuration mistakes from creating
+    # unusable annotations.
+    unknown_labels = {
+        item.get("label")
+        for item in results
+        if item.get("label") not in context.user_data.labels
+    }
+    if unknown_labels:
+        context.logger.warning(
+            f"Dropping results with labels not advertised by this function: {sorted(str(label) for label in unknown_labels)}"
+        )
 
-    # log("Leaving handler")
+    valid_results = [
+        item for item in results if item.get("label") in context.user_data.labels
+    ]
+    return _response(context, valid_results, status_code=200)
 
-    # return context.Response(body=json.dumps(results), headers={},
-    #     content_type='application/json', status_code=200)
-    return context.Response(body=json.dumps([]), headers={},
-            content_type='application/json', status_code=400)
+
+def _collapse_scoreboard(item, allowed_broadcasters):
+    """Turn a per-broadcaster scoreboard label into label plus attribute form."""
+    label = item.get("label")
+    if not isinstance(label, str) or not label.startswith(SCOREBOARD_LABEL_PREFIX):
+        return item
+
+    broadcaster = label[len(SCOREBOARD_LABEL_PREFIX) :]
+    collapsed = dict(item, label=SCOREBOARD_LABEL)
+
+    # CVAT drops attribute values that the task label does not declare, so only
+    # broadcasters advertised in function.yaml are worth sending.
+    if broadcaster in allowed_broadcasters:
+        attributes = [
+            attribute
+            for attribute in collapsed.get("attributes", [])
+            if isinstance(attribute, dict)
+            and attribute.get("name") != BROADCASTER_ATTRIBUTE
+        ]
+        attributes.append({"name": BROADCASTER_ATTRIBUTE, "value": broadcaster})
+        collapsed["attributes"] = attributes
+
+    return collapsed
+
+
+def _response(context, body, status_code):
+    """Build the bare-array response expected by CVAT detector functions."""
+    return context.Response(
+        body=json.dumps(body),
+        headers={},
+        content_type="application/json",
+        status_code=status_code,
+    )
