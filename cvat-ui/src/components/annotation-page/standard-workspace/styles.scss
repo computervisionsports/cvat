@@ -22,7 +22,7 @@
     z-index: 2;
     position: absolute;
     padding: 8px;
-    background: white;
+    background: $background-color-1;
     transition: box-shadow 0.5s;
 
     &:hover {
@@ -70,6 +70,9 @@
     background: $background-color-2;
     border-right: 1px solid $border-color-1;
     overflow: hidden;
+
+    // Tool glyphs are drawn with currentColor, so the sidebar owns their colour.
+    color: $objects-bar-icons-color;
 
     div:has(span[role="img"]) {
         text-align: center;
@@ -245,9 +248,9 @@
     position: absolute;
     left: 0;
     top: 0;
-    background: rgba(0, 0, 0, 80%);
+    background: rgba($item-contrast-rgb, 80%);
     background-color: rgba(128, 128, 128, 60%);
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 18%) 25%, transparent 25%), linear-gradient(-45deg, rgba(255, 255, 255, 18%) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 18%) 75%), linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 18%) 75%);
+    background-image: linear-gradient(45deg, rgba($item-surface-rgb, 18%) 25%, transparent 25%), linear-gradient(-45deg, rgba($item-surface-rgb, 18%) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba($item-surface-rgb, 18%) 75%), linear-gradient(-45deg, transparent 75%, rgba($item-surface-rgb, 18%) 75%);
     background-size: 16px 16px;
     background-position: 0 0, 0 8px, 8px -8px, -8px 0;
 }

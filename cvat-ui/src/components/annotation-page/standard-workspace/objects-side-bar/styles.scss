@@ -59,7 +59,7 @@
 .cvat-object-item-button-pinned,
 .cvat-object-item-button-hidden,
 .cvat-object-item-button-keyframe {
-    color: rgba(0, 0, 0, 62%);
+    color: rgba($item-contrast-rgb, 62%);
 }
 
 .cvat-object-item-button-outside-enabled,
@@ -102,7 +102,7 @@
 .cvat-objects-sidebar-labels-list-header {
     background: $objects-bar-tabs-color;
     padding: $grid-unit-size * 0.75 $grid-unit-size;
-    border-bottom: 1px solid rgba(0, 0, 0, 8%);
+    border-bottom: 1px solid rgba($item-contrast-rgb, 8%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 6%);
 
     .ant-typography {
@@ -114,7 +114,7 @@
     background: $objects-bar-tabs-color;
     padding: $grid-unit-size * 0.75 $grid-unit-size;
     box-sizing: border-box;
-    border-bottom: 1px solid rgba(0, 0, 0, 8%);
+    border-bottom: 1px solid rgba($item-contrast-rgb, 8%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 6%);
 
     .ant-typography {
@@ -124,9 +124,9 @@
     .cvat-objects-sidebar-issues-toolbar {
         margin-top: $grid-unit-size;
         padding: $grid-unit-size * 0.5;
-        border: 1px solid rgba(0, 0, 0, 6%);
+        border: 1px solid rgba($item-contrast-rgb, 6%);
         border-radius: $border-radius-base;
-        background: rgba(255, 255, 255, 38%);
+        background: rgba($item-surface-rgb, 38%);
 
         > div {
             display: inline-flex;
@@ -173,10 +173,10 @@
     width: 100%;
     margin: 0;
     padding: $grid-unit-size;
-    border: 2px solid rgba(0, 0, 0, 8%);
+    border: 2px solid rgba($item-contrast-rgb, 8%);
     border-left: 3px solid #ff7300;
     border-radius: $border-radius-base;
-    background: rgba(255, 255, 255, 82%);
+    background: rgba($item-surface-rgb, 82%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 8%);
     transition: border-color $box-shadow-transition, box-shadow $box-shadow-transition, background-color $box-shadow-transition;
 
@@ -185,10 +185,10 @@
     }
 
     &:hover {
-        border-color: rgba(0, 0, 0, 24%);
+        border-color: rgba($item-contrast-rgb, 24%);
         border-left-color: #ff7300;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 12%);
-        background: rgba(255, 255, 255, 92%);
+        background: rgba($item-surface-rgb, 92%);
     }
 
     > .ant-alert.ant-alert-with-description {
@@ -210,10 +210,10 @@
     width: 100%;
     margin: 0;
     padding: $grid-unit-size;
-    border: 2px solid rgba(0, 0, 0, 8%);
+    border: 2px solid rgba($item-contrast-rgb, 8%);
     border-left: 3px solid #e10602;
     border-radius: $border-radius-base;
-    background: rgba(255, 255, 255, 82%);
+    background: rgba($item-surface-rgb, 82%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 8%);
     transition: border-color $box-shadow-transition, box-shadow $box-shadow-transition, background-color $box-shadow-transition;
 
@@ -222,10 +222,10 @@
     }
 
     &:hover {
-        border-color: rgba(0, 0, 0, 24%);
+        border-color: rgba($item-contrast-rgb, 24%);
         border-left-color: #e10602;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 12%);
-        background: rgba(255, 255, 255, 92%);
+        background: rgba($item-surface-rgb, 92%);
     }
 
     p {
@@ -238,17 +238,17 @@
 }
 
 .cvat-objects-sidebar-item-active {
-    border: 2px solid rgba(0, 0, 0, 66%);
+    border: 2px solid rgba($item-contrast-rgb, 66%);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 14%);
 }
 
 .cvat-objects-sidebar-issue-resolved {
-    border-color: rgba(0, 0, 0, 8%);
+    border-color: rgba($item-contrast-rgb, 8%);
     border-left: 3px solid $border-color-1;
-    background: rgba(255, 255, 255, 64%);
+    background: rgba($item-surface-rgb, 64%);
 
     &:hover {
-        border-color: rgba(0, 0, 0, 18%);
+        border-color: rgba($item-contrast-rgb, 18%);
         border-left-color: $border-color-1;
     }
 }
@@ -257,7 +257,7 @@
     background: $objects-bar-tabs-color;
     padding: $grid-unit-size;
     line-height: $grid-unit-size * 3;
-    border-bottom: 1px solid rgba(0, 0, 0, 8%);
+    border-bottom: 1px solid rgba($item-contrast-rgb, 8%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 6%);
 
     > div {
@@ -275,9 +275,9 @@
                 width: $grid-unit-size * 16;
 
                 .ant-select-selector {
-                    border-color: rgba(0, 0, 0, 12%);
+                    border-color: rgba($item-contrast-rgb, 12%);
                     border-radius: $border-radius-base;
-                    background: rgba(255, 255, 255, 72%);
+                    background: rgba($item-surface-rgb, 72%);
                 }
             }
         }
@@ -286,9 +286,9 @@
             width: 100%;
             margin-top: $grid-unit-size;
             padding: $grid-unit-size * 0.5;
-            border: 1px solid rgba(0, 0, 0, 6%);
+            border: 1px solid rgba($item-contrast-rgb, 6%);
             border-radius: $border-radius-base;
-            background: rgba(255, 255, 255, 38%);
+            background: rgba($item-surface-rgb, 38%);
 
             span[role='img'] {
                 &:not(:first-child) {
@@ -364,7 +364,7 @@
     margin: 0 (-$grid-unit-size * 0.5);
     height: $grid-unit-size * 4;
     padding: $grid-unit-size;
-    border: 1px solid rgba(0, 0, 0, 6%);
+    border: 1px solid rgba($item-contrast-rgb, 6%);
     background: $background-color-2;
     position: sticky;
     top: 0;
@@ -406,8 +406,8 @@
 
 .cvat-objects-sidebar-z-layer-mark {
     align-items: center;
-    background: rgba(255, 255, 255, 46%);
-    border-bottom: 1px solid rgba(0, 0, 0, 7%);
+    background: rgba($item-surface-rgb, 46%);
+    border-bottom: 1px solid rgba($item-contrast-rgb, 7%);
     display: flex;
     justify-content: space-between;
     height: $grid-unit-size * 4;
@@ -456,7 +456,7 @@
 }
 
 .cvat-objects-sidebar-z-layer {
-    border: 1px solid rgba(0, 0, 0, 8%);
+    border: 1px solid rgba($item-contrast-rgb, 8%);
     flex: 0 0 auto;
     overflow: visible;
     position: relative;
@@ -466,7 +466,7 @@
         box-shadow $box-shadow-transition;
 
     &:hover {
-        border-color: rgba(0, 0, 0, 18%);
+        border-color: rgba($item-contrast-rgb, 18%);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 8%);
     }
 
@@ -517,14 +517,14 @@
 
 .cvat-objects-sidebar-state-item.cvat-objects-sidebar-state-active-item {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 14%);
-    border: 2px solid rgba(0, 0, 0, 66%);
+    border: 2px solid rgba($item-contrast-rgb, 66%);
 }
 
 .cvat-objects-sidebar-state-item {
     width: 100%;
     background-color: rgba(var(--state-item-background), 1);
     transition: border-color $box-shadow-transition, box-shadow $box-shadow-transition;
-    border: 2px solid rgba(0, 0, 0, 8%);
+    border: 2px solid rgba($item-contrast-rgb, 8%);
     border-radius: $border-radius-base;
     padding: $grid-unit-size * 0.75;
     margin-left: 0;
@@ -541,7 +541,7 @@
     }
 
     &:hover {
-        border-color: rgba(0, 0, 0, 42%);
+        border-color: rgba($item-contrast-rgb, 42%);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 12%);
     }
 
@@ -558,7 +558,7 @@
                 margin-right: $grid-unit-size * 0.5;
                 padding: 0 $grid-unit-size * 0.5;
                 border-radius: $border-radius-base;
-                background: rgba(255, 255, 255, 72%);
+                background: rgba($item-surface-rgb, 72%);
                 color: $text-color;
                 font-weight: 600;
                 line-height: $grid-unit-size * 2.5;
@@ -573,9 +573,9 @@
             width: 100%;
 
             .ant-select-selector {
-                border-color: rgba(0, 0, 0, 12%);
+                border-color: rgba($item-contrast-rgb, 12%);
                 border-radius: $border-radius-base;
-                background: rgba(255, 255, 255, 82%);
+                background: rgba($item-surface-rgb, 82%);
             }
         }
     }
@@ -583,7 +583,7 @@
     > div:nth-child(2) {
         margin-top: $grid-unit-size * 0.5;
         padding-top: $grid-unit-size * 0.5;
-        border-top: 1px solid rgba(0, 0, 0, 7%);
+        border-top: 1px solid rgba($item-contrast-rgb, 7%);
 
         > div {
             row-gap: $grid-unit-size * 0.5;
@@ -699,20 +699,20 @@
 }
 
 .cvat-objects-sidebar-label-active-item {
-    background: rgba(255, 255, 255, 92%);
+    background: rgba($item-surface-rgb, 92%);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 14%);
-    border: 2px solid rgba(0, 0, 0, 66%);
+    border: 2px solid rgba($item-contrast-rgb, 66%);
 }
 
 .cvat-objects-sidebar-label-item {
     min-height: $grid-unit-size * 5;
     transition: border-color $box-shadow-transition, box-shadow $box-shadow-transition, background-color $box-shadow-transition;
-    border: 2px solid rgba(0, 0, 0, 8%);
+    border: 2px solid rgba($item-contrast-rgb, 8%);
     border-radius: $border-radius-base;
     padding: $grid-unit-size * 0.5 $grid-unit-size * 0.75;
     margin-left: $grid-unit-size * 0.5;
     margin-right: $grid-unit-size * 0.5;
-    background: rgba(255, 255, 255, 82%);
+    background: rgba($item-surface-rgb, 82%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 8%);
 
     &:first-of-type {
@@ -865,7 +865,7 @@
 
 .cvat-objects-sidebar-state-item-elements {
     padding: $grid-unit-size * 0.5 $grid-unit-size * 0.75;
-    border: 1px solid rgba(0, 0, 0, 7%);
+    border: 1px solid rgba($item-contrast-rgb, 7%);
     border-radius: $border-radius-base;
     background-color: rgba(var(--state-item-background), 1);
 
@@ -875,7 +875,7 @@
 }
 
 .cvat-objects-sidebar-state-item-elements.cvat-objects-sidebar-state-active-element {
-    border: 1px solid rgba(0, 0, 0, 42%);
+    border: 1px solid rgba($item-contrast-rgb, 42%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 10%);
 }
 
