@@ -1,0 +1,114 @@
+// Copyright (C) CVAT.ai Corporation
+//
+// SPDX-License-Identifier: MIT
+
+@import 'base';
+
+$dark-background-1: #141414;
+$dark-background-2: #1f1f1f;
+$dark-background-3: #262626;
+$dark-header-color: #262626;
+$dark-text-color: rgba(255, 255, 255, 85%);
+$dark-border-color: #434343;
+
+body.cvat-dark-mode {
+    background-color: $dark-background-1;
+    color: $dark-text-color;
+
+    .cvat-text-color,
+    .cvat-title {
+        color: $dark-text-color;
+    }
+
+    .cvat-header.ant-layout-header {
+        background: $dark-header-color;
+    }
+
+    .ant-btn.ant-btn-link.cvat-header-button {
+        color: $dark-text-color;
+
+        &:hover {
+            color: $dark-text-color;
+        }
+    }
+
+    .cvat-workspace-settings,
+    .cvat-player-settings,
+    .cvat-shortcuts-settings,
+    .cvat-organizations-settings,
+    .cvat-appearance-settings {
+        background: $dark-background-2;
+    }
+
+    .cvat-shortcuts-settings-collapse .ant-collapse-header,
+    .cvat-shortcuts-settings-collapse .ant-collapse-content-box {
+        background-color: $dark-background-2;
+        border-bottom-color: $dark-border-color;
+    }
+
+    .cvat-spinner-container {
+        background: $dark-background-1;
+    }
+
+    .cvat-scrollbar {
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-track {
+            background-color: $dark-background-2;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #595959;
+            border-color: $dark-background-2;
+        }
+    }
+
+    .cvat-annotation-header,
+    .cvat-objects-sidebar-tabs,
+    .cvat-objects-sidebar-tabs-header,
+    .cvat-objects-sidebar-states-header,
+    .cvat-objects-sidebar-labels-header,
+    .cvat-objects-sidebar-issues-header,
+    .cvat-canvas-controls-sidebar,
+    .cvat-canvas-context-image-wrapper .cvat-canvas-context-image-header {
+        background: $dark-header-color !important;
+    }
+
+    .cvat-objects-sidebar-states-list,
+    .cvat-objects-sidebar-labels-list,
+    .cvat-objects-sidebar-issues-list,
+    .cvat-standard-workspace,
+    .cvat-review-workspace,
+    .cvat-attribute-annotation-workspace,
+    .cvat-tag-annotation-workspace,
+    .cvat-single-shape-workspace,
+    .cvat-canvas-grid-layout,
+    .cvat-canvas-brush-toolbox,
+    .cvat-canvas3d-perspective-wrapper,
+    .cvat-review-workspace-issues-sidebar,
+    .cvat-review-workspace-objects-sidebar,
+    .cvat-resource-page-filters,
+    .cvat-resource-page-sorting-list {
+        background: $dark-background-2;
+    }
+
+    .cvat-standard-workspace .cvat-canvas-container,
+    .cvat-canvas-grid-layout .cvat-canvas-grid-cell {
+        background: $dark-background-3;
+    }
+
+    .cvat-jobs-page-tabs-card .ant-tabs-tab,
+    .cvat-tasks-page-tabs-card .ant-tabs-tab,
+    .cvat-projects-page-tabs-card .ant-tabs-tab {
+        background: $dark-background-2;
+    }
+
+    .cvat-jobs-page-tabs-card .ant-tabs-tab-active,
+    .cvat-tasks-page-tabs-card .ant-tabs-tab-active,
+    .cvat-projects-page-tabs-card .ant-tabs-tab-active {
+        background: $dark-background-3;
+    }
+
+    .cvat-appearance-settings-dark-mode-label {
+        margin-left: $grid-unit-size;
+    }
+}

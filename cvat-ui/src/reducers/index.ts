@@ -1083,10 +1083,15 @@ export interface ShapesSettingsState {
     orientationVisibility: OrientationVisibility;
 }
 
+export interface AppearanceSettingsState {
+    darkMode: boolean;
+}
+
 export interface SettingsState {
     shapes: ShapesSettingsState;
     workspace: WorkspaceSettingsState;
     player: PlayerSettingsState;
+    appearance: AppearanceSettingsState;
     imageFilters: ImageFilter[];
     showDialog: boolean;
 }

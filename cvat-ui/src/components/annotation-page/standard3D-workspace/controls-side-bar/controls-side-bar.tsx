@@ -30,6 +30,7 @@ import GlobalHotKeys, { KeyMap, KeyMapItem } from 'utils/mousetrap-react';
 import ControlVisibilityObserver from 'components/annotation-page/standard-workspace/controls-side-bar/control-visibility-observer';
 import { filterApplicableForType } from 'utils/filter-applicable-labels';
 import { subKeyMap } from 'utils/component-subkeymap';
+import { useDarkMode } from 'utils/hooks';
 import { ShortcutScope } from 'utils/enums';
 import { registerComponentShortcuts } from 'actions/shortcuts-actions';
 
@@ -231,8 +232,9 @@ export default function ControlsSideBarComponent(props: Props): JSX.Element {
     } : { ...handlers };
 
     const controlsDisabled = !applicableLabels.length;
+    const darkMode = useDarkMode();
     return (
-        <Layout.Sider className='cvat-canvas-controls-sidebar' theme='light' width={44}>
+        <Layout.Sider className='cvat-canvas-controls-sidebar' theme={darkMode ? 'dark' : 'light'} width={44}>
             <GlobalHotKeys
                 keyMap={applicableLabels.length ? subKeyMap(componentShortcuts, keyMap) : {}}
                 handlers={handlers}

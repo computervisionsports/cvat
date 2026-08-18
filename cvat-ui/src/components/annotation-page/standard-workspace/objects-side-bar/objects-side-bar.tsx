@@ -28,6 +28,7 @@ interface OwnProps {
 interface StateToProps {
     sidebarCollapsed: boolean;
     jobInstance: any;
+    darkMode: boolean;
 }
 
 interface DispatchToProps {
@@ -45,6 +46,7 @@ function mapStateToProps(state: CombinedState): StateToProps {
     return {
         sidebarCollapsed,
         jobInstance,
+        darkMode: state.settings.appearance.darkMode,
     };
 }
 
@@ -58,7 +60,7 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>): DispatchToProps {
 
 function ObjectsSideBar(props: StateToProps & DispatchToProps & OwnProps): JSX.Element {
     const {
-        sidebarCollapsed, collapseSidebar, objectsList, jobInstance,
+        sidebarCollapsed, collapseSidebar, objectsList, jobInstance, darkMode,
     } = props;
     const [activeTab, setActiveTab] = useState('objects');
     useEffect((): () => void => {
@@ -93,7 +95,7 @@ function ObjectsSideBar(props: StateToProps & DispatchToProps & OwnProps): JSX.E
     return (
         <Layout.Sider
             className='cvat-objects-sidebar'
-            theme='light'
+            theme={darkMode ? 'dark' : 'light'}
             width={320}
             collapsedWidth={0}
             reverseArrow

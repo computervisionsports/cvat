@@ -24,6 +24,7 @@ import { getModelsAsync } from 'actions/models-actions';
 import { getPluginsAsync } from 'actions/plugins-actions';
 import { getUserAgreementsAsync } from 'actions/useragreements-actions';
 import CVATApplication from 'components/cvat-app';
+import ThemeProvider from 'components/theme-provider/theme-provider';
 import PluginsEntrypoint from 'components/plugins-entrypoint';
 import LayoutGrid from 'components/layout-grid/layout-grid';
 import { logError } from 'cvat-logger';
@@ -37,10 +38,14 @@ import { getServerAPISchemaAsync } from 'actions/server-actions';
 import { getGrowthDataAsync, updateGrowthDataAsync } from 'actions/growth-actions';
 import { navigationActions } from 'actions/navigation-actions';
 import { UserGrowthDataModifiableFields } from 'cvat-core-wrapper';
+import { applyDarkModeClass, readDarkModeFromStorage } from 'utils/dark-mode';
 import {
     CombinedState, GrowthState, NotificationsState, PluginsState,
 } from './reducers';
 import './utils/dayjs-wrapper';
+import './dark-mode.scss';
+
+applyDarkModeClass(readDarkModeFromStorage());
 
 createCVATStore(createRootReducer);
 
@@ -164,11 +169,13 @@ const ReduxAppWrapper = connect(mapStateToProps, mapDispatchToProps)(CVATApplica
 const root = createRoot(document.getElementById('root') as HTMLDivElement);
 root.render((
     <Provider store={cvatStore}>
-        <BrowserRouter>
-            <PluginsEntrypoint />
-            <ReduxAppWrapper />
-        </BrowserRouter>
-        <LayoutGrid />
+        <ThemeProvider>
+            <BrowserRouter>
+                <PluginsEntrypoint />
+                <ReduxAppWrapper />
+            </BrowserRouter>
+            <LayoutGrid />
+        </ThemeProvider>
     </Provider>
 ));
 
