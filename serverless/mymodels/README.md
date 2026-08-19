@@ -1,14 +1,19 @@
-# RF-DETR CVAT integration
+# CVAT inference API proxies
 
-This Nuclio function is a thin adapter:
+These Nuclio functions are thin adapters:
 
 ```text
-CVAT -> Nuclio rfdetr-scoreboards -> FastAPI /v1/inference -> ONNX RF-DETR
+CVAT -> Nuclio function -> FastAPI /v1/inference -> ONNX model
 ```
 
-The function receives CVAT's base64 image, forwards it to the
-`cvat_api_inference_models` service, and returns the bare detector-result array
-CVAT expects.
+Each function receives CVAT's base64 image, forwards it to the
+`cvat_api_inference_models` service with a fixed `model_name`, and returns the
+bare detector-result array CVAT expects.
+
+| Function | Display name | API `model_name` | Project labels |
+| --- | --- | --- | --- |
+| `rfdetr-scoreboards` | RF-DETR Scoreboards and Parts | `scoreboard_general` | rectangles (see [Scoreboard labels](#scoreboard-labels)) |
+| `yolo-tennis-court-keypoints` | YOLO Pose Tennis Court Keypoints | `tennis_court_keypoints` | skeleton `tennis_court` + `point_1`…`point_14` |
 
 ## 1. Start CVAT with serverless support
 
@@ -28,7 +33,7 @@ Use the development compose file too if that is how your CVAT checkout is run.
 From `cvat_api_inference_models`:
 
 ```bash
-uv sync --extra rfdetr
+uv sync --extra all
 export CVAT_INFERENCE_API_KEY=dev-api-key-change-me
 uv run cvat-inference
 ```
@@ -40,16 +45,20 @@ curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/v1/models
 ```
 
-## 3. Deploy the Nuclio proxy
+Install `--extra rfdetr` or `--extra yolo` instead of `--extra all` if you only
+need one backend.
+
+## 3. Deploy the Nuclio proxies
 
 From the CVAT repository:
 
 ```bash
 export CVAT_INFERENCE_API_KEY=dev-api-key-change-me
 export CVAT_INFERENCE_API_URL=http://host.docker.internal:8000/v1/inference
-export CVAT_INFERENCE_MODEL_NAME=scoreboard_general
 
 ./serverless/mymodels/deploy.sh
+# or one function:  ./serverless/mymodels/deploy.sh scoreboards
+#                   ./serverless/mymodels/deploy.sh tennis_court
 ```
 
 `host.docker.internal` is available in Docker Desktop on macOS. On Linux,
@@ -60,14 +69,20 @@ from the Nuclio container.
 The API key must be identical in the API process and Nuclio deployment.
 Redeploy the function after changing any `CVAT_INFERENCE_*` value.
 
-## 4. Use the model
+## 4. Use the models
 
-1. Open CVAT's **Models** page and confirm **RF-DETR Scoreboards and Parts**
-   appears.
-2. Create task labels matching the model's labels, or map model labels to task
-   labels in the automatic-annotation dialog.
+1. Open CVAT's **Models** page and confirm the deployed functions appear.
+2. Create project/task labels that match the function spec (names and types).
+   For the tennis-court skeleton, the easiest path is **Constructor → From
+   model** and picking **YOLO Pose Tennis Court Keypoints**. You can also paste
+   [`tennis_court_project_labels.json`](tennis_court_project_labels.json) into
+   the **Raw** tab.
 3. In a job, open **AI Tools -> Detectors**, select the model, and annotate the
    current frame. For a whole task, use **Actions -> Automatic annotation**.
+
+CVAT auto-maps labels whose names match exactly. Skeleton models also require
+matching sublabel names (`point_1` … `point_14`) and type `skeleton` — a
+rectangle or `any` label will not accept pose output.
 
 ## Scoreboard labels
 
@@ -87,12 +102,24 @@ For this to map itself, the task needs a label named `scoreboard` with a
 so the two sets must be kept in sync; adding a broadcaster means updating
 `function.yaml` and the task label together.
 
+## Tennis court labels
+
+`tennis_court_keypoints` returns one skeleton named `tennis_court` with 14
+`points` elements `point_1` … `point_14`. The Nuclio spec in
+`nuclio/tennis_court.yaml` advertises that skeleton (including an SVG template)
+so CVAT can list it on the Models page, copy it via **From model**, and keep
+the pose results instead of dropping them as unknown labels.
+
+You cannot change a skeleton definition after the project is created. If the
+project was set up without this label, create a new project.
+
 ## Troubleshooting
 
 ```bash
 nuctl get functions --platform local
 docker logs nuclio
 docker logs nuclio-nuclio-rfdetr-scoreboards
+docker logs nuclio-nuclio-yolo-tennis-court-keypoints
 ```
 
 From inside the Nuclio container/network, the FastAPI URL must be reachable.
