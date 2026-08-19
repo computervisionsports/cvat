@@ -145,7 +145,7 @@
         height: $grid-unit-size * 2.5;
         padding: 0 $grid-unit-size * 0.5;
         border-radius: $border-radius-base;
-        background: rgba(255, 255, 255, 72%);
+        background: rgba($item-surface-rgb, 72%);
         color: $text-color;
         font-size: 11px;
         font-weight: 600;
