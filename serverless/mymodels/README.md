@@ -47,7 +47,7 @@ From the CVAT repository:
 ```bash
 export CVAT_INFERENCE_API_KEY=dev-api-key-change-me
 export CVAT_INFERENCE_API_URL=http://host.docker.internal:8000/v1/inference
-export CVAT_INFERENCE_MODEL_NAME=rfdetr_inference_model
+export CVAT_INFERENCE_MODEL_NAME=scoreboard_general
 
 ./serverless/mymodels/deploy.sh
 ```

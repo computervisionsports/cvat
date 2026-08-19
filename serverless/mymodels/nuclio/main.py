@@ -37,7 +37,7 @@ def init_context(context):
     api_key = os.environ.get("CVAT_INFERENCE_API_KEY")
     model_name = os.environ.get(
         "CVAT_INFERENCE_MODEL_NAME",
-        "rfdetr_inference_model",
+        "scoreboard_general",
     )
 
     missing = [

@@ -7,7 +7,7 @@
 #
 # Optional:
 #   CVAT_INFERENCE_API_URL     default: http://host.docker.internal:8000/v1/inference
-#   CVAT_INFERENCE_MODEL_NAME  default: rfdetr_inference_model
+#   CVAT_INFERENCE_MODEL_NAME  default: scoreboard_general
 #
 # On Linux, host.docker.internal may not resolve. Run the API in a container on
 # the cvat_cvat network, or set CVAT_INFERENCE_API_URL to an address reachable
@@ -21,7 +21,7 @@ FUNCTION_DIR="$SCRIPT_DIR/nuclio"
 : "${CVAT_INFERENCE_API_KEY:?Set CVAT_INFERENCE_API_KEY before deploying}"
 
 CVAT_INFERENCE_API_URL="${CVAT_INFERENCE_API_URL:-http://host.docker.internal:8000/v1/inference}"
-CVAT_INFERENCE_MODEL_NAME="${CVAT_INFERENCE_MODEL_NAME:-rfdetr_inference_model}"
+CVAT_INFERENCE_MODEL_NAME="${CVAT_INFERENCE_MODEL_NAME:-scoreboard_general}"
 
 # Project creation fails when it already exists; that is safe to ignore.
 nuctl create project cvat --platform local 2>/dev/null || true
