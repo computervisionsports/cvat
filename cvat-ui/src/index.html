@@ -20,6 +20,24 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700;8..144,800&family=Sora&display=swap" rel="stylesheet">
         <title>Computer Vision Annotation Tool</title>
+        <script>
+            // Paints the dark background before the bundle runs so dark mode users
+            // do not see a white flash. Only the root element is touched, because
+            // document.body does not exist yet; the body class is added by the app.
+            (function () {
+                try {
+                    var settings = localStorage.getItem('clientSettings');
+                    if (!settings) {
+                        return;
+                    }
+                    var parsed = JSON.parse(settings);
+                    if (parsed.appearance && parsed.appearance.darkMode) {
+                        document.documentElement.style.colorScheme = 'dark';
+                        document.documentElement.style.backgroundColor = '#141414';
+                    }
+                } catch (e) {}
+            })();
+        </script>
     </head>
     <body translate="no">
         <div id="root"></div>

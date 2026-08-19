@@ -16,6 +16,10 @@ import { authQuery } from './auth-query';
 import { KeyMap, KeyMapItem } from './mousetrap-react';
 import { dispatchContextMenuEvent } from './context-menu-helper';
 
+export function useDarkMode(): boolean {
+    return useSelector((state: CombinedState) => state.settings.appearance.darkMode);
+}
+
 export function usePrevious<T>(value: T): T | undefined {
     const ref = useRef<T>();
     useEffect(() => {

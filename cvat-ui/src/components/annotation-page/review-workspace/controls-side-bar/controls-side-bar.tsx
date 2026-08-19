@@ -7,6 +7,7 @@ import React from 'react';
 import Layout from 'antd/lib/layout';
 
 import { KeyMap } from 'utils/mousetrap-react';
+import { useDarkMode } from 'utils/hooks';
 import { ActiveControl, Rotation } from 'reducers';
 import { Canvas } from 'cvat-canvas-wrapper';
 
@@ -33,9 +34,10 @@ export default function ControlsSideBarComponent(props: Props): JSX.Element {
     } = props;
 
     const controlsDisabled = frameIsDeleted;
+    const darkMode = useDarkMode();
 
     return (
-        <Layout.Sider className='cvat-canvas-controls-sidebar' theme='light' width={44}>
+        <Layout.Sider className='cvat-canvas-controls-sidebar' theme={darkMode ? 'dark' : 'light'} width={44}>
             <CursorControl
                 cursorShortkey={normalizedKeyMap.CANCEL}
                 canvasInstance={canvasInstance}

@@ -61,6 +61,7 @@ export enum SettingsActionTypes {
     DISABLE_IMAGE_FILTER = 'DISABLE_IMAGE_FILTER',
     RESET_IMAGE_FILTERS = 'RESET_IMAGE_FILTERS',
     CHANGE_SHAPES_ORIENTATION_VISIBILITY = 'CHANGE_SHAPES_ORIENTATION_VISIBILITY',
+    SWITCH_DARK_MODE = 'SWITCH_DARK_MODE',
 }
 
 export function changeShapesOpacity(opacity: number): AnyAction {
@@ -395,6 +396,15 @@ export function switchToolsBlockerState(toolsBlockerState: ToolsBlockerState): A
     };
 }
 
+export function switchDarkMode(darkMode: boolean): AnyAction {
+    return {
+        type: SettingsActionTypes.SWITCH_DARK_MODE,
+        payload: {
+            darkMode,
+        },
+    };
+}
+
 export function setSettings(settings: Partial<SettingsState>): AnyAction {
     return {
         type: SettingsActionTypes.SET_SETTINGS,
@@ -462,14 +472,19 @@ export function restoreSettingsAsync(): ThunkAction {
         const newSettings = {
             player: settings.player,
             workspace: settings.workspace,
+            appearance: settings.appearance,
             imageFilters: [],
-        } as Pick<SettingsState, 'player' | 'workspace' | 'imageFilters'>;
+        } as Pick<SettingsState, 'player' | 'workspace' | 'appearance' | 'imageFilters'>;
 
-        Object.entries(_.pick(newSettings, ['player', 'workspace'])).forEach(([sectionKey, section]) => {
+        Object.entries(_.pick(newSettings, ['player', 'workspace', 'appearance'])).forEach(([sectionKey, section]) => {
             Object.keys(section).forEach((key) => {
                 const setValue = loadedSettings[sectionKey]?.[key];
                 if (setValue !== undefined) {
-                    Object.defineProperty(newSettings[sectionKey as 'player' | 'workspace'], key, { value: setValue });
+                    Object.defineProperty(
+                        newSettings[sectionKey as 'player' | 'workspace' | 'appearance'],
+                        key,
+                        { value: setValue },
+                    );
                 }
             });
         });
@@ -508,6 +523,7 @@ export function updateCachedSettings(settings: CombinedState['settings'], shortc
     const settingsForSaving = {
         player: settings.player,
         workspace: settings.workspace,
+        appearance: settings.appearance,
         shortcuts: {
             keyMap: Object.entries(shortcuts.keyMap).reduce<Record<string, { sequences: string[] }>>(
                 (acc, [key, value]) => {

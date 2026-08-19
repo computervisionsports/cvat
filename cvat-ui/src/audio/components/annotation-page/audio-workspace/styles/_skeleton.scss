@@ -37,7 +37,7 @@ $skeleton-radius: 4px;
     align-items: center;
     padding-top: 12px;
     gap: 16px;
-    background-color: #fff;
+    background-color: $background-color-1;
 
     .cvat-audio-skeleton-control {
         @extend %cvat-audio-skeleton-block;
@@ -55,7 +55,7 @@ $skeleton-radius: 4px;
 }
 
 .cvat-audio-skeleton-waveform {
-    background-color: #fff;
+    background-color: $background-color-1;
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 10%);
@@ -96,7 +96,7 @@ $skeleton-radius: 4px;
 }
 
 .cvat-audio-skeleton-regions {
-    background-color: #fff;
+    background-color: $background-color-1;
 }
 
 .cvat-audio-skeleton-regions-header {
@@ -130,7 +130,7 @@ $skeleton-radius: 4px;
     align-items: flex-start;
     gap: 8px;
     padding: 8px;
-    background-color: #f9fafb;
+    background-color: $background-color-2;
     border: 1px solid $skeleton-border;
     border-radius: 4px;
 }

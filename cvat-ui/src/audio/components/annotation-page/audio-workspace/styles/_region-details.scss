@@ -4,7 +4,7 @@
 
 .cvat-audio-region-details {
     margin-top: 12px;
-    background-color: white;
+    background-color: $background-color-1;
     border-radius: 8px;
     box-shadow:
         0 1px 3px rgba(0, 0, 0, 8%),
@@ -35,7 +35,7 @@
         border-radius: 6px;
         font-size: 14px;
         font-weight: 700;
-        color: #303030;
+        color: $text-color;
         padding: 0 6px;
         flex-shrink: 0;
     }
@@ -76,7 +76,7 @@
         min-width: 0;
 
         &:hover {
-            background-color: #f9fafb;
+            background-color: $background-color-2;
         }
 
         &:focus-visible {
@@ -97,7 +97,7 @@
             flex: 0 1 auto;
             font-size: 13px;
             font-weight: 500;
-            color: #303030;
+            color: $text-color;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -160,13 +160,13 @@
             .ant-collapse-header {
                 padding: 8px 14px;
                 font-size: 13px;
-                color: #303030;
-                background-color: #f9fafb;
+                color: $text-color;
+                background-color: $background-color-2;
                 transition: background-color 0.15s ease;
             }
 
             &.ant-collapse-item-active .ant-collapse-header {
-                background-color: #f1f1f1;
+                background-color: $background-color-2;
             }
 
             .ant-collapse-content {

@@ -272,7 +272,7 @@ html, body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(255,255,255,70%);
+    background: rgba($item-surface-rgb, 70%);
     z-index: 2000;
     display: flex;
     align-items: center;
@@ -283,7 +283,7 @@ html, body {
 .cvat-bulk-progress-message {
     margin-top: $grid-unit-size * 3;
     font-size: 18px;
-    color: #333;
+    color: $text-color;
     min-height: $grid-unit-size * 3;
 }
 

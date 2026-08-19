@@ -65,6 +65,9 @@ const defaultState: SettingsState = {
         contrastLevel: 100,
         saturationLevel: 100,
     },
+    appearance: {
+        darkMode: false,
+    },
     imageFilters: [],
     showDialog: false,
 };
@@ -397,6 +400,15 @@ export default (state = defaultState, action: AnyAction): SettingsState => {
                 workspace: {
                     ...state.workspace,
                     toolsBlockerState: { ...state.workspace.toolsBlockerState, ...action.payload.toolsBlockerState },
+                },
+            };
+        }
+        case SettingsActionTypes.SWITCH_DARK_MODE: {
+            return {
+                ...state,
+                appearance: {
+                    ...state.appearance,
+                    darkMode: action.payload.darkMode,
                 },
             };
         }

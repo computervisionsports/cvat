@@ -16,6 +16,7 @@ import { LabelType } from 'cvat-core-wrapper';
 import { ShortcutScope } from 'utils/enums';
 import { registerComponentShortcuts } from 'actions/shortcuts-actions';
 import { subKeyMap } from 'utils/component-subkeymap';
+import { useDarkMode } from 'utils/hooks';
 import ControlVisibilityObserver, {
     ExtraControlsControl, ContainerHeightContext,
 } from './control-visibility-observer';
@@ -161,6 +162,7 @@ export default function ControlsSideBarComponent(props: Props): JSX.Element {
         frameData,
     } = props;
 
+    const darkMode = useDarkMode();
     const controlsDisabled = !labels.length || frameData.deleted;
     const withUnspecifiedType = labels.some((label: any) => label.type === 'any' && !label.hasParent);
     let rectangleControlVisible = withUnspecifiedType;
@@ -357,7 +359,7 @@ export default function ControlsSideBarComponent(props: Props): JSX.Element {
 
     return (
         <ContainerHeightContext.Provider value={containerHeight}>
-            <Layout.Sider ref={containerRef} className='cvat-canvas-controls-sidebar' theme='light' width={44}>
+            <Layout.Sider ref={containerRef} className='cvat-canvas-controls-sidebar' theme={darkMode ? 'dark' : 'light'} width={44}>
                 <GlobalHotKeys keyMap={subKeyMap(componentShortcuts, keyMap)} handlers={handlers} />
                 <ObservedCursorControl
                     cursorShortkey={normalizedKeyMap.CANCEL}

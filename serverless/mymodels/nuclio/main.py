@@ -49,9 +49,7 @@ def init_context(context):
         if not value
     ]
     if missing:
-        raise RuntimeError(
-            "Missing required environment variables: {}".format(", ".join(missing))
-        )
+        raise RuntimeError("Missing required environment variables: {}".format(", ".join(missing)))
 
     context.user_data.api_url = api_url
     context.user_data.api_key = api_key
@@ -106,18 +104,14 @@ def handler(context, event):
     # label here also prevents backend configuration mistakes from creating
     # unusable annotations.
     unknown_labels = {
-        item.get("label")
-        for item in results
-        if item.get("label") not in context.user_data.labels
+        item.get("label") for item in results if item.get("label") not in context.user_data.labels
     }
     if unknown_labels:
         context.logger.warning(
             f"Dropping results with labels not advertised by this function: {sorted(str(label) for label in unknown_labels)}"
         )
 
-    valid_results = [
-        item for item in results if item.get("label") in context.user_data.labels
-    ]
+    valid_results = [item for item in results if item.get("label") in context.user_data.labels]
     return _response(context, valid_results, status_code=200)
 
 
@@ -136,8 +130,7 @@ def _collapse_scoreboard(item, allowed_broadcasters):
         attributes = [
             attribute
             for attribute in collapsed.get("attributes", [])
-            if isinstance(attribute, dict)
-            and attribute.get("name") != BROADCASTER_ATTRIBUTE
+            if isinstance(attribute, dict) and attribute.get("name") != BROADCASTER_ATTRIBUTE
         ]
         attributes.append({"name": BROADCASTER_ATTRIBUTE, "value": broadcaster})
         collapsed["attributes"] = attributes

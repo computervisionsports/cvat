@@ -1,0 +1,283 @@
+// Copyright (C) CVAT.ai Corporation
+//
+// SPDX-License-Identifier: MIT
+
+@import 'base';
+
+// Surfaces, from the furthest back to the most raised. Values are aligned with
+// the palette Ant Design's dark algorithm generates so custom CVAT panels and
+// Ant Design components sit on the same scale.
+$dark-page: #141414;
+$dark-surface: #1f1f1f;
+$dark-raised: #262626;
+$dark-raised-strong: #303030;
+$dark-text: rgba(255, 255, 255, 85%);
+
+// Kept well above the 45% the dark algorithm would use: at that level captions
+// and inactive tab labels drop under a 4.5:1 ratio against these surfaces.
+$dark-text-secondary: rgba(255, 255, 255, 60%);
+$dark-text-muted: rgba(255, 255, 255, 65%);
+$dark-border: #3a3a3a;
+
+body.cvat-dark-mode {
+    // Retheming these custom properties recolours every rule in the app that is
+    // built on the tokens declared in base.scss.
+    --cvat-header-color: #{$dark-raised};
+    --cvat-text-color: #{$dark-text};
+    --cvat-text-color-secondary: #{$dark-text-secondary};
+    --cvat-background-color-1: #{$dark-surface};
+    --cvat-background-color-2: #{$dark-page};
+    --cvat-border-color-1: #{$dark-raised-strong};
+    --cvat-objects-bar-tabs-color: #3f3f3f;
+    --cvat-objects-bar-icons-color: #{$dark-text};
+    --cvat-player-buttons-color: #{$dark-text};
+    --cvat-player-slider-color: #5c5c5c;
+    --cvat-info-icon-color: #3c9ae8;
+    --cvat-annotation-progress-color: #595959;
+    --cvat-notification-background-color-1: #111d2c;
+    --cvat-active-label-background-color: #112a45;
+    --cvat-object-item-border-color: rgba(255, 255, 255, 70%);
+    --cvat-layout-grid-color: rgba(255, 255, 255, 12%);
+    --cvat-item-surface-rgb: 43, 43, 43;
+    --cvat-item-contrast-rgb: 255, 255, 255;
+    --cvat-scrollbar-track-color: #{$dark-surface};
+    --cvat-scrollbar-thumb-color: #4d4d4d;
+    --cvat-icon-inset-color: #{$dark-raised};
+
+    background-color: $dark-page;
+    color: $dark-text;
+
+    // Ant Design paints most text itself, but CVAT sets colours directly in a
+    // number of places; these keep such text legible on the dark surfaces.
+    .cvat-text-color,
+    .cvat-title,
+    .cvat-item-task-name,
+    .cvat-item-project-name {
+        color: $dark-text;
+    }
+
+    // The header keeps a hand-picked light-on-dark treatment because it is the
+    // only full-width chrome element.
+    .cvat-header.ant-layout-header {
+        background: $dark-raised;
+        border-bottom: 1px solid $dark-raised-strong;
+    }
+
+    .ant-btn.ant-btn-link.cvat-header-button {
+        color: $dark-text;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    // Cards and list rows: Ant Design's own containers plus the CVAT resource
+    // rows, so that content sits on a raised surface instead of on plain white.
+    .ant-card,
+    .cvat-tasks-list-item,
+    .cvat-projects-project-item-card,
+    .cvat-job-page-list-item,
+    .cvat-cloud-storage-item,
+    .cvat-models-item-card,
+    .cvat-invitation-item,
+    .cvat-webhooks-list-item,
+    .cvat-requests-card,
+    .cvat-organization-member-item,
+    .cvat-job-item {
+        background: $dark-surface;
+        border-color: $dark-raised-strong;
+    }
+
+    // Small inverted chips on the jobs page read as holes in the card unless
+    // they are lifted above it.
+    .cvat-jobs-page .cvat-job-page-list-item {
+        .cvat-job-page-list-item-dimension,
+        .cvat-job-page-list-item-id,
+        .cvat-job-page-list-item-type {
+            background: $dark-raised;
+            color: $dark-text;
+        }
+    }
+
+    // Annotation workspace chrome.
+    .cvat-annotation-header,
+    .cvat-objects-sidebar-tabs-header,
+    .cvat-canvas-context-image-wrapper .cvat-canvas-context-image-header {
+        background: $dark-raised;
+    }
+
+    .cvat-objects-sidebar,
+    .cvat-objects-sidebar > .ant-layout-sider-children {
+        background: $dark-page;
+    }
+
+    // Right-hand panel tabs. Ant Design's card tabs keep a light "inactive"
+    // fill, which is what made the Objects/Labels/Issues labels unreadable.
+    .cvat-objects-sidebar-tabs.ant-tabs.ant-tabs-card {
+        background: $dark-raised;
+
+        > .ant-tabs-nav {
+            margin-bottom: 0;
+
+            &::before {
+                border-bottom-color: $dark-border;
+            }
+
+            .ant-tabs-tab {
+                background: transparent;
+                border-color: $dark-border;
+
+                .ant-tabs-tab-btn {
+                    color: $dark-text-muted;
+                }
+
+                &:hover .ant-tabs-tab-btn {
+                    color: #fff;
+                }
+
+                &.ant-tabs-tab-active {
+                    background: $dark-surface;
+                    border-bottom-color: $dark-surface;
+
+                    .ant-tabs-tab-btn {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    // The tab label colour is also set structurally by the workspace stylesheet.
+    .cvat-objects-sidebar > .ant-layout-sider-children
+    > .cvat-objects-sidebar-tabs > div div[role="tab"] {
+        color: inherit;
+    }
+
+    // Appearance block at the bottom of the objects sidebar.
+    .cvat-objects-appearance-collapse.ant-collapse {
+        border-color: $dark-raised-strong;
+
+        > .ant-collapse-item {
+            border-color: $dark-raised-strong;
+
+            > .ant-collapse-header {
+                background: $dark-raised;
+                color: $dark-text;
+
+                .ant-collapse-header-text,
+                .cvat-objects-appearance-collapse-header {
+                    color: $dark-text;
+                }
+            }
+
+            > .ant-collapse-content {
+                background: $dark-surface;
+                border-top-color: $dark-raised-strong;
+
+                .ant-radio-button-wrapper:not(.ant-radio-button-wrapper-checked) {
+                    background: $dark-raised;
+                    border-color: $dark-border;
+                    color: $dark-text;
+                }
+            }
+        }
+    }
+
+    // Canvas control strip and floating canvas widgets.
+    .cvat-canvas-controls-sidebar {
+        background: $dark-raised;
+    }
+
+    .cvat-canvas-brush-toolbox,
+    .cvat-canvas-point-context-menu,
+    .cvat-canvas-z-axis-wrapper {
+        background: $dark-surface;
+        border: 1px solid $dark-raised-strong;
+        color: $dark-text;
+    }
+
+    .cvat-brush-tools-toolbox button {
+        color: $dark-text;
+    }
+
+    // Player rail needs to stay visible against the dark header.
+    .cvat-player-slider.ant-slider > .ant-slider-rail {
+        background-color: #5c5c5c;
+    }
+
+    .cvat-player-slider.ant-slider .ant-slider-mark-chapter {
+        background-color: #7a7a7a;
+    }
+
+    .cvat-player-chapter-menu-list-item:hover {
+        background-color: $dark-raised;
+    }
+
+    // Frame filename / navigation inputs inside the dark header.
+    .cvat-player-frame-selector,
+    .cvat-player-filename-wrapper {
+        color: $dark-text;
+    }
+
+    // Resource pages: filter and sorting popovers.
+    .cvat-resource-page-filters-builder,
+    .cvat-resource-page-sorting-list,
+    .cvat-resource-page-predefined-filters-list,
+    .cvat-resource-page-recent-filters-list,
+    .cvat-dropdown-menu-paper {
+        background: $dark-surface;
+        color: $dark-text;
+    }
+
+    // Full-page forms (create task / project / organization / job / storage,
+    // webhook setup) all shared a hardcoded white panel.
+    .cvat-create-organization-form,
+    .cvat-create-project-content,
+    .cvat-create-task-content,
+    .cvat-create-job-form-wrapper,
+    .cvat-cloud-storage-form,
+    .cvat-setup-webhook-content,
+    .cvat-task-details,
+    .cvat-project-details {
+        background: $dark-surface;
+        border-color: $dark-raised-strong;
+        color: $dark-text;
+    }
+
+    .cvat-task-preview-wrapper {
+        background-color: $dark-raised;
+    }
+
+    // Modal and drawer surfaces used by the settings dialog tabs.
+    .cvat-workspace-settings,
+    .cvat-player-settings,
+    .cvat-shortcuts-settings,
+    .cvat-organizations-settings,
+    .cvat-appearance-settings {
+        background: $dark-surface;
+    }
+
+    .cvat-shortcuts-settings-collapse .ant-collapse-header,
+    .cvat-shortcuts-settings-collapse .ant-collapse-content-box {
+        background-color: $dark-surface;
+        border-bottom-color: $dark-raised-strong;
+    }
+
+    .cvat-spinner-container {
+        background: $dark-page;
+    }
+
+    .cvat-bulk-progress-wrapper {
+        background: rgba(0, 0, 0, 70%);
+    }
+
+    // Labels editor / skeleton configurator popovers.
+    .cvat-skeleton-configurator-context-menu {
+        background: $dark-surface;
+        color: $dark-text;
+    }
+
+    .cvat-appearance-settings-dark-mode-label {
+        margin-left: $grid-unit-size;
+    }
+}

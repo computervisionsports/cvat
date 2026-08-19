@@ -13,7 +13,7 @@
         gap: 8px;
         width: 100%;
         text-align: left;
-        color: #303030;
+        color: $text-color;
         font-size: 13px;
         padding: 5px 12px;
         height: auto;
@@ -21,8 +21,8 @@
         box-shadow: none;
 
         &:hover {
-            background-color: #f5f5f5;
-            color: #303030;
+            background-color: $background-color-2;
+            color: $text-color;
         }
 
         &:disabled {
