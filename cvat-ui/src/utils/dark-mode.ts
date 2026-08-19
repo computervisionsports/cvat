@@ -5,13 +5,11 @@
 const DARK_MODE_BODY_CLASS = 'cvat-dark-mode';
 
 export function applyDarkModeClass(darkMode: boolean): void {
-    if (darkMode) {
-        document.body.classList.add(DARK_MODE_BODY_CLASS);
-        document.documentElement.style.colorScheme = 'dark';
-    } else {
-        document.body.classList.remove(DARK_MODE_BODY_CLASS);
-        document.documentElement.style.colorScheme = 'light';
-    }
+    document.body.classList.toggle(DARK_MODE_BODY_CLASS, darkMode);
+    document.documentElement.style.colorScheme = darkMode ? 'dark' : 'light';
+    // Clears the pre-paint background set by the inline script in index.html once
+    // the stylesheets own the page background.
+    document.documentElement.style.backgroundColor = '';
 }
 
 export function readDarkModeFromStorage(): boolean {
