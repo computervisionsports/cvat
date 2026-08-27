@@ -54,7 +54,9 @@ From the CVAT repository:
 
 ```bash
 export CVAT_INFERENCE_API_KEY=dev-api-key-change-me
-export CVAT_INFERENCE_API_URL=http://host.docker.internal:8000/v1/inference
+# API in Docker on cvat_cvat: http://cvat_inference_api:8000/v1/inference
+# API on host (uv run):       http://host.docker.internal:8000/v1/inference
+export CVAT_INFERENCE_API_URL=http://cvat_inference_api:8000/v1/inference
 
 ./serverless/mymodels/deploy.sh
 # or one function:  ./serverless/mymodels/deploy.sh scoreboards

@@ -12,6 +12,8 @@
 #
 # Optional:
 #   CVAT_INFERENCE_API_URL  default: http://host.docker.internal:8000/v1/inference
+#   When the API runs in Docker on the cvat_cvat network (see cvat_api_inference_models
+#   docker-compose.yml), use http://cvat_inference_api:8000/v1/inference instead.
 #
 # Each function is staged into its own directory so the image contains only
 # that function.yaml. main.py reads /opt/nuclio/function.yaml for the label spec.
